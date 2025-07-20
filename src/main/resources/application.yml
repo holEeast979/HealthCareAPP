@@ -1,0 +1,46 @@
+#spring.application.name=demo
+spring:
+  application:
+    name: demo
+  datasource:
+    url: jdbc:mysql://localhost:3306/jnu_tijian?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: cuso4
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# Mybatis配置
+mybatis:
+  # 配置XML映射文件中指定的实体类别名路径
+  type-aliases-package: com.example.demo.pojo
+  # 配置MyBatis的xml配置文件路径
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 开启驼峰uName自动映射到u_name
+  map-underscore-to-camel-case: true
+# 打印sql
+logging:
+  level:
+    com.example.demo.mapper : debug
+# 短信验证配置
+smsmodel:
+  accountId: "2c94811c9787a27f01982586e7c520e3"
+  authToken: "16c2ca8f4e1e4ab6867fc80bb00603b7"
+  appId: "2c94811c9787a27f01982586e99520ea"
+#deepseek配置
+deeps-eek:
+  key: "sk-9bbb3d635a724f5c85ae14aa181b9602"
+  url: "https://api.deepseek.com/chat/completions"
+#支付宝沙箱配置
+alipay:
+  appid: 9021000150656301
+  #应用私钥
+  appPrivateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCVmt/uQuFE76cIh3hdMGI3RZZkej/ZfvIePVp5fW9t0tgWM8KfA6HwlZPLIjgF/9O8VUWii2pTg3047u4S24RMdpE/GwJJiCFS6psoEh7WinDLV4gG49sJ5LIjc+3NXcr2pOCndXeDNTatZwTyKDlJerodQFcljdM5JQd3RGClvrRgiNMXF9lel8Dbb7ynV+EdMvrhNKicMxwldtvrncbsC/y3ZovjY4J5NEm4kvT/4jG+y1/6T7T5SAPxm5Kreimx5TjzPcN1qZXwtbcXIP0GCcBR90VhgqWP1DBZkfuIf172UYT6tPlSylSxyQMSeYrVotkFUVH5zaVU8ibzP3MlAgMBAAECggEAANVM+/m5YXXoOz7t5672TRKBJOwdYOu5E3wJ/fU54qWy+GSvZ81QYJOksBPvtfDX0Au1iJM4M2DfGKsT/lzknrxmULCo0ZoFfX27AX0gWNeKi0dghZFNTf/NEi96GpO0Jq2CZsxbrwpj1JFnUKXys7sQQEt0cMwaag4PvZVO6H1mNgAzNy5e6GUUGXBq9cPSoOg049AUpLihLEMOsWEnJqkcpyWDRRAgBUTgDaWs8IrVNvEziszv8uWD7rAKfc+yXxSHYDpG05kn0ct4Kc4tRAl/F3DI1O59HWbQAGl2+K4aM2aSNak+glfI7Fr0ANbQolIPRJOU0ZRZoHtjLK3kwQKBgQDhz8rhcBtYEA1wanrztKPbo2GdFnQR1mXHlalJcQoINQOxAbIicFhgXbunVx7BssVchK8xw96TC+B8d5/ankxkXyWMIhm3eD34IPs3TlRF/cuOdbUJQRJWgSKqDhIBOI6a9B2SyiHk4yIzT1r57se/N9NuP2aXgyJoAxR+zjAZsQKBgQCpmvloniihCGm0X8K1LnjUkcewij83hny/Pvvk7xzXZMmnaHAWSK8x9l8orWRb0+9qEz41OZzLEvPsVNRRDb+HDsksoxgV5ZYbZDdfVCI7cOnwrVqXgQDCKLHxcnMVkGovqrEQL44NArz8HRS10naMZepbmSKPkTPcpgUsqCsZtQKBgDgtKZvL+AGAfNdqpgva9Ki/jJk37MhDPi7Y3LSYmpZQGgr/EQHgURwoNXb8BXrKrq7Fk5Ad2lFasw5D9FC+8OJHiV/DXAJ4t3HzQowPwIdpDCr0vYT/20AKAEWuGmyTVWbXNERAZQ48M1XweAGVlbvMd50FyNAIn5agrYieYvkBAoGBAIF2GxThTPAGhPE6+1vjWjYgBMZb8H9It+YfhJUuc9xyQX74uD46QwinH+Hj4Kw7bQ+SGrT0Ahv8npZx9hLcpKrJ/YOGBreIJPlJmP66MNsgiGG/YVwuC08pUxKTIwd90aAK8dcCBbMmuOzUod9cBEOM88PxczEVS/oL+/0nbKbVAoGBAMDoLoaeI9zkE18E69g967z6oxloXEttwUtb+Vth2BzH81OHirBXjK5aXNR8tQQOVjUjnGo/xD8BjwlkqSCEqcf8llodVMwOvXXfbM1sG7zcxdZkdF69SzSEcp52JIWoqvYEeyMTmPmhZ2t5ZsdNsFX/FjHMSIZMkG/Z0HT87kd3  #支付宝公钥
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1IVLbhUAF/jG1X0eFqDnM30I0mS85iEQZuwABNfhFh+UbEe+IgsXonkP7gYvzIirfXV3zo5vcjzCs/iiUt1FFsaRBuXaA35BbIhMxozg80wYmxd+SOghgzOzw3nDGnqUVRxkFcserTW60U4sBuUdJ254I4xzg2R7/D16f5llfWkc4Zmjsc2WO71L/OKIGHXGmxw8OTC8GlOy20dGlZabIx390NoSTrxTv6EORbY2WjC2HJJpTBTJbz3Lz9GPhGTD7Ytuv7f+RMxVuZJvZSbDhjF1R0gqJQpy3OfJphELtH0hD8PjyrUMo2fKGsj6acNekzlYezOG6E9qJjUOG4rhcwIDAQAB  #公网地址（每次都会变）
+  notifyUrl: http://ud852x.natappfree.cc/alipay/notify
+#jwt配置
+tjian:
+  jwt:
+    #设置jwt签名加密时使用的秘钥
+    user-secret-key: itheima
+    # 设置jwt过期时间
+    user-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    user-token-name: token

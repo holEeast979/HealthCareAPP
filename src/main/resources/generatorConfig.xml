@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="jdbc.properties"/>
+
+    <!-- targetRuntime属性用于为生成的代码指定运行时目标。具体值可查看官网说明-->
+    <context id="mybatisGeneratorByMary" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 数据库连接信息 -->
+        <jdbcConnection driverClass="${driver}"
+                        connectionURL="${url}" userId="${username}" password="${password}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+
+
+        <!-- 生成Model/pojo对象路径配置 -->
+<!--        <javaModelGenerator targetPackage="com.example.demo.pojo"-->
+<!--                            targetProject=".\src\main\java">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--            &lt;!&ndash; 需要掂量&ndash;&gt;-->
+<!--            <property name="trimStrings" value="true"/>-->
+<!--        </javaModelGenerator>-->
+
+        <!-- 生成sqlXML文件路径配置 -->
+<!--        <sqlMapGenerator targetPackage="mapper"-->
+<!--                         targetProject=".\src\main\resources">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </sqlMapGenerator>-->
+
+        <!-- 生成DAO/Mapper的类文件路径配置 -->
+        <javaClientGenerator targetPackage="com.example.demo.mapper"
+                             targetProject=".\src\main\java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--要生成哪些表 -->
+        <table tableName="checkitem" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+
+        </table>
+
+        <table tableName="checkitemdetailed" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+
+        </table>
+
+        <table tableName="cidetailedreport" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+
+        </table>
+
+        <table tableName="cireport" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="doctor" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="hospital" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="orders" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="overallresult" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="setmeal" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="setmealdetailed" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+
+        <table tableName="users" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" >
+<!--            <property name="useActualColumnNames" value="true" />-->
+        </table>
+        <!-- <table tableName="business" domainObjectName="Business" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="cart" domainObjectName="Cart" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="deliveryaddress" domainObjectName="Deliveryaddress" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="orderdetailet" domainObjectName="Orderdetailet" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="orders" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="role" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>
+<table tableName="roleuser" enableCountByExample="false" enableDeleteByExample="false"
+ <table tableName="roleuser" enableCountByExample="false" enableDeleteByExample="false"
+enableSelectByExample="false" enableUpdateByExample="false" >
+<property name="useActualColumnNames" value="true" />
+</table>-->
+    </context>
+</generatorConfiguration>

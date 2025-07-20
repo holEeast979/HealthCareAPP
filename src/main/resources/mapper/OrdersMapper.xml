@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.pojo.Orders">
+    <id column="orderId" jdbcType="INTEGER" property="orderid" />
+    <result column="orderDate" jdbcType="DATE" property="orderdate" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="hpId" jdbcType="INTEGER" property="hpid" />
+    <result column="smId" jdbcType="INTEGER" property="smid" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderId, orderDate, userId, hpId, smId, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+      orderId, orderDate, userId, hpId, smId, state, orderPrice
+    from orders
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </select>
+
+  <select id="pageQuery" resultType="com.example.demo.pojo.vo.OrderPageVO">
+    select o.orderId,u.userId,u.realName,u.sex,s.name sname,o.orderdate,
+           h.name hname,o.state,o.smId
+    from users u,setmeal s,orders o,hospital h
+    where u.userId=o.userId and s.smId=o.smId  and o.hpId=h.hpId and o.state in (2, 3)
+    <if test="sex != null" >
+      and u.sex=#{sex}
+    </if>
+    <if test="name != null and name!=''" >
+      and s.name = #{name}
+    </if>
+    <if test="state != null and state!=''" >
+      and o.state=#{state}
+    </if>
+    <if test="userid != null and userid!=''" >
+      and u.userId = #{userid}
+    </if>
+    <if test="realname != null and realname!=''" >
+      and u.realName like concat('%',#{realname},'%')
+    </if>
+    <if test="orderdate != null and orderdate!=''" >
+      and o.orderDate = #{orderdate}
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orders
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.pojo.Orders" useGeneratedKeys="true">
+    insert into orders (orderId, orderDate, userId, 
+      hpId, smId, state)
+    values (#{orderid,jdbcType=INTEGER}, #{orderdate,jdbcType=DATE}, #{userid,jdbcType=VARCHAR}, 
+      #{hpid,jdbcType=INTEGER}, #{smid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.pojo.Orders">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="orderdate != null">
+        orderDate,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="hpid != null">
+        hpId,
+      </if>
+      <if test="smid != null">
+        smId,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="orderdate != null">
+        #{orderdate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="hpid != null">
+        #{hpid,jdbcType=INTEGER},
+      </if>
+      <if test="smid != null">
+        #{smid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.pojo.Orders">
+    update orders
+    <set>
+      <if test="orderdate != null">
+        orderDate = #{orderdate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="hpid != null">
+        hpId = #{hpid,jdbcType=INTEGER},
+      </if>
+      <if test="smid != null">
+        smId = #{smid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.pojo.Orders">
+    update orders
+    set orderDate = #{orderdate,jdbcType=DATE},
+      userId = #{userid,jdbcType=VARCHAR},
+      hpId = #{hpid,jdbcType=INTEGER},
+      smId = #{smid,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+
+  <select id="listOrdersAppointmentNumber" parameterType="com.example.demo.pojo.dto.OrdersMapperDto" resultType="com.example.demo.pojo.dto.CalendarResponseDto">
+    <foreach collection="list" item="dto" separator="union">
+      select #{dto.date} ymd,count(*) existing from orders where orderDate=#{dto.date} and hpId=#{dto.hpid}
+    </foreach>
+  </select>
+</mapper>

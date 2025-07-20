@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.HospitalMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.pojo.Hospital">
+    <id column="hpId" jdbcType="INTEGER" property="hpid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="businessHours" jdbcType="VARCHAR" property="businesshours" />
+    <result column="deadline" jdbcType="VARCHAR" property="deadline" />
+    <result column="rule" jdbcType="VARCHAR" property="rule" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.pojo.Hospital">
+    <result column="picture" jdbcType="LONGVARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    hpId, name, telephone, address, businessHours, deadline, rule, state
+  </sql>
+  <sql id="Blob_Column_List">
+    picture
+  </sql>
+  <select id="showhospital" resultType="com.example.demo.pojo.Hospital">
+    SELECT hpId, name, picture, telephone, address, businessHours, deadline, rule
+    FROM hospital where state=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hospital
+    where hpId = #{hpid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hospital
+    where hpId = #{hpid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.pojo.Hospital">
+    insert into hospital (hpId, name, telephone, 
+      address, businessHours, deadline, 
+      rule, state, picture
+      )
+    values (#{hpid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{businesshours,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, 
+      #{rule,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{picture,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.pojo.Hospital">
+    insert into hospital
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hpid != null">
+        hpId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="businesshours != null">
+        businessHours,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+      <if test="rule != null">
+        rule,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hpid != null">
+        #{hpid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="businesshours != null">
+        #{businesshours,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.pojo.Hospital">
+    update hospital
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="businesshours != null">
+        businessHours = #{businesshours,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        rule = #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where hpId = #{hpid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.pojo.Hospital">
+    update hospital
+    set name = #{name,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      businessHours = #{businesshours,jdbcType=VARCHAR},
+      deadline = #{deadline,jdbcType=VARCHAR},
+      rule = #{rule,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=LONGVARCHAR}
+    where hpId = #{hpid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.pojo.Hospital">
+    update hospital
+    set name = #{name,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      businessHours = #{businesshours,jdbcType=VARCHAR},
+      deadline = #{deadline,jdbcType=VARCHAR},
+      rule = #{rule,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where hpId = #{hpid,jdbcType=INTEGER}
+  </update>
+</mapper>
