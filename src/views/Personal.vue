@@ -70,6 +70,15 @@
                     </li>
                     <li>
                         <div class="left">
+                            <i class="fa fa-heartbeat"></i>
+                            <p>自选体检</p>
+                        </div>
+                        <div class="right" @click="toCustomCheck">
+                            <i class="fa fa-angle-right"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
                             <i class="fa fa-sign-out"></i>
                             <p>退出登录</p>
                         </div>
@@ -116,12 +125,16 @@ export default {
         function toappointmentlist(){
             router.push("/appointmentlist")
         }
+        function toCustomCheck(){
+            router.push("/custom-check")
+        }
         return {
             ...toRefs(state),
             topersonal,
             toindex,
             logout,
-            toappointmentlist
+            toappointmentlist,
+            toCustomCheck
         };
     },
 }
