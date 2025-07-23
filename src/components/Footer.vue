@@ -5,7 +5,7 @@
                         <i class="fa fa-home"></i>
                         <p>云医院</p>
                     </li>
-                    <li>
+                    <li @click="tomall">
                         <i class="fa fa-opencart"></i>
                         <p>商城</p>
                     </li>
@@ -32,9 +32,13 @@ export default {
         function topersonal(){
             router.push("/personal") 
         }
+        function tomall(){
+            router.push("/mall") 
+        }
         return {
             toindex,
-            topersonal
+            topersonal,
+            tomall
         };
     }
 }
