@@ -3,7 +3,7 @@
     <body>
         <!-- 总容器 -->
         <div class="wrapper">
-            <h1>体检预约-登录</h1>
+            <h1>康中康体检预约-登录</h1>
             <section>
                 <div class="input-box">
                     <i class="fa fa-user-o"></i>
@@ -54,7 +54,7 @@ export default {
         const router = useRouter();
         const state = reactive({
             user: {
-                userId: '15678570952',
+                userId: '13202302676',
                 password: '123456'
             },
             showSmsLogin: false,
@@ -65,46 +65,32 @@ export default {
                 alert('请输入账号或密码')
                 return;
             }
-            
-            // 使用模拟数据而不是调用API
-            const mockResponse = {
-                code: 1,
-                data: {
-                    token: 'mock-token-12345',
-                    users: {
-                        userid: state.user.userId,
-                        realname: '模拟用户',
-                        sex: '男',
-                        age: 30,
-                        phone: state.user.userId
+            axios.post('api/user/login', {
+                userid: state.user.userId,
+                password: state.user.password,
+            })
+                .then(function (response) {
+                    // 处理成功响应
+                    const result = response.data;
+                    console.log(result.data);
+                    if (result.code == 1) {
+                        alert("登录成功");
+                        setSessionStorage('token', result.data.token);
+                        setSessionStorage("users", result.data.users);
+                        router.push("/index")
+                    } else {
+                        alert(response.data.msg);
+                        state.user.userId = "",
+                            state.user.password = "";
                     }
-                },
-                msg: '登录成功'
-            };
-            
-            // 处理成功响应
-            const result = mockResponse;
-            console.log(result.data);
-            if (result.code == 1) {
-                alert("登录成功");
-                setSessionStorage('token', result.data.token);
-                localStorage.setItem('token', result.data.token); // 同时存储在localStorage中
-                setSessionStorage("users", result.data.users);
-                
-                // 获取重定向路径
-                const redirect = router.currentRoute.value.query.redirect;
-                if (redirect) {
-                    // 如果存在重定向路径，跳转到该路径
-                    router.push(redirect);
-                } else {
-                    // 否则默认跳转到首页
-                    router.push("/index");
-                }
-            } else {
-                alert(result.msg);
-                state.user.userId = "",
-                state.user.password = "";
-            }
+                })
+                .catch(function (error) {
+                    // 错误处理
+                    console.log(error);
+                })
+                .finally(function () {
+                    // 总是执行
+                });
         }
         function toregister() {
             console.log("注册");
@@ -136,50 +122,51 @@ export default {
             const intervalId = setInterval(updateButtonText, 1000);
         }
         function getSmsLogin() {
-            // 模拟发送短信
-            console.log('模拟发送短信到：', state.user.userId);
-            // 不做任何API调用
+            axios.post('/api/sendSMS', {
+                phone: state.user.userId,
+            })
+                .then(function (response) {
+                    // 成功处理
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    // 错误处理
+                    console.log(error);
+                })
+                .finally(function () {
+                    // 总是执行
+                });
         }
         function usesmsLogin() {
-            // 使用模拟数据而不是调用API
-            const mockResponse = {
-                code: 1,
-                data: {
-                    token: 'mock-token-12345',
-                    users: {
-                        userid: state.user.userId,
-                        realname: '模拟用户',
-                        sex: '男',
-                        age: 30,
-                        phone: state.user.userId
-                    }
-                },
-                msg: '登录成功'
-            };
-            
-            // 处理成功响应
-            const result = mockResponse;
-            console.log(result);
-            if (result.code == 1) {
-                alert("登录成功");
-                setSessionStorage('token', result.data.token);
-                localStorage.setItem('token', result.data.token); // 同时存储在localStorage中
-                setSessionStorage("users", result.data.users);
-                
-                // 获取重定向路径
-                const redirect = router.currentRoute.value.query.redirect;
-                if (redirect) {
-                    // 如果存在重定向路径，跳转到该路径
-                    router.push(redirect);
-                } else {
-                    // 否则默认跳转到首页
-                    router.push("/index");
+            axios.get('/api/checkSMS', {
+                // 这里的 params 应该是一个对象，包含电话号码和短信验证码
+                params: {
+                    phone: state.user.userId, // 电话号码
+                    sms: state.sms // 短信验证码
                 }
-            } else {
-                alert(result.msg);
-                state.user.userId = "",
-                state.user.password = "";
-            }
+            })
+                .then(function (response) {
+                    // 成功处理
+                    const result = response.data;
+                    console.log(result);
+                    if (result.code == 1) {
+                        alert("登录成功");
+                        setSessionStorage('token', result.data.token);
+                        setSessionStorage("users", result.data.users);
+                        router.push("/index")
+                    } else {
+                        alert(response.data.msg);
+                        state.user.userId = "",
+                        state.user.password = "";
+                    }
+                })
+                .catch(function (error) {
+                    // 错误处理
+                    console.log(error);
+                })
+                .finally(function () {
+                    // 总是执行
+                });
         }
         return {
             ...toRefs(state),
@@ -207,7 +194,7 @@ export default {
 h1 {
     text-align: center;
     color: #FFF;
-    font-size: 7vw;
+    font-size: 9.5vw;
     font-weight: 500;
     margin-top: 13vh;
     margin-bottom: 3vh;
@@ -225,17 +212,18 @@ section {
 
 section .input-box {
     width: 100%;
-    height: 14vw;
+    height: 12vw;
     border: solid 1px #CCC;
     border-radius: 2vw;
     margin-top: 5vw;
+
     display: flex;
     align-items: center;
 }
 
 section .input-sms {
     width: 100%;
-    height: 14vw;
+    height: 12vw;
     border: solid 1px #CCC;
     border-radius: 2vw;
     margin-top: 5vw;
@@ -246,42 +234,32 @@ section .input-sms {
 
 section .input-sms button {
     position: absolute;
-    right: 0;
+    right: 10;
     top: 0;
-    height: 100%;
-    width: 40%;
-    border: none;
-    border-radius: 0 2vw 2vw 0;
-    background-color: #70B0BC;
-    color: white;
-    font-size: 3.8vw;
-    font-weight: bold;
+    width: 100%;
 }
 
 section .input-box i {
     margin: 0 3.6vw;
-    font-size: 6vw;
-    color: #888;
+    font-size: 5.4vw;
+    color: #CCC;
 }
 
 section .input-sms i {
     margin: 0 3.6vw;
-    font-size: 6vw;
-    color: #888;
+    font-size: 5.4vw;
+    color: #CCC;
 }
+
 
 section .input-box input {
     border: none;
     outline: none;
-    font-size: 4.2vw;
-    width: 80%;
 }
 
 section .input-sms input {
     border: none;
     outline: none;
-    font-size: 4.2vw;
-    width: 50%;
 }
 
 section .reg-box {
@@ -293,7 +271,7 @@ section .reg-box {
 }
 
 section .smscss {
-    font-size: 3.6vw;
+    font-size: 2.3vw;
     color: #2D727E;
     user-select: none;
     cursor: pointer;
@@ -304,7 +282,7 @@ section .tosms {
 }
 
 section .reg-box p {
-    font-size: 3.8vw;
+    font-size: 3.3vw;
     color: #2D727E;
     user-select: none;
     cursor: pointer;
@@ -312,14 +290,16 @@ section .reg-box p {
 
 section .button-box {
     width: 100%;
-    height: 14vw;
+    height: 13vw;
     border-radius: 2vw;
     background-color: #70B0BC;
+
     text-align: center;
-    line-height: 14vw;
-    font-size: 5vw;
+    line-height: 13vw;
+    font-size: 4.6vw;
     color: #FFF;
     letter-spacing: 1vw;
+
     user-select: none;
     cursor: pointer;
 }
@@ -329,7 +309,7 @@ footer {
     width: 86vw;
     margin: 0 auto;
     margin-top: 12vw;
-    font-size: 4vw;
+    font-size: 3.8vw;
     color: #ffffff;
 }
 

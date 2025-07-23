@@ -8,7 +8,7 @@ import Appointmentlist from '@/views/Appointmentlist.vue'
 import Appointmentsuccess from '@/views/Appointmentsuccess.vue'
 import AppointmentCancel from '@/views/AppointmentCancel.vue'
 import Setmeal from '@/views/Setmeal.vue'
-import Login from '@/views/Login.vue'
+import LoginVue from "@/views/Login.vue";
 import Register from '@/views/Register.vue'
 import Report from '@/views/Report.vue'
 import Reportlist from '@/views/Reportlist.vue'
@@ -25,7 +25,9 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login' // 将根路径重定向到登录页面
+      name: 'login',
+      component: LoginVue
+
     },
     {
       path: '/index',
@@ -71,11 +73,6 @@ const router = createRouter({
       path: '/setmeal',
       name: 'setmeal',
       component: Setmeal
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
     },
     {
       path: '/register',
@@ -130,27 +127,5 @@ const router = createRouter({
   ]
 })
 
-// 需要登录权限的路由
-const authRequiredRoutes = [
-  'mall', 'cart', 'compare', 'custom-check', 'appointmentlist', 
-  'report', 'reportlist', 'personal', 'deepseek', 'appointmentsuccess'
-];
-
-// 全局前置守卫
-router.beforeEach((to, from, next) => {
-  // 检查用户是否已登录
-  const token = localStorage.getItem('token');
-  
-  // 如果路由需要认证且用户未登录，则重定向到登录页
-  if (authRequiredRoutes.includes(to.name) && !token) {
-    console.log('检测到未登录状态，正在重定向到登录页');
-    next({ 
-      name: 'login',
-      query: { redirect: to.fullPath } // 保存原本想要访问的页面路径
-    });
-  } else {
-    next(); // 正常导航
-  }
-});
 
 export default router

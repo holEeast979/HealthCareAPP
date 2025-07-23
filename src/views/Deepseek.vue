@@ -27,7 +27,7 @@ export default {
     setup() {
         const state = reactive({
             messages: [
-                { text: '你好！我是AI助手，有什么可以帮你的吗？', isUser: false }
+                { text: '你好！我是康中康智能体检报告检查助手，有什么可以帮到你吗？', isUser: false }
             ],
             userMessage: "", // 用户输入的消息
         });
