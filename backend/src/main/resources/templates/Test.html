@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付页面</title>
+</head>
+<body>
+<script>
+    // 定义表单数据的字符串
+    var formDataStr = `
+            <form name="punchout_form" method="post" action="https://openapi-sandbox.dl.alipaydev.com/gateway.do?charset=GBK&method=alipay.trade.page.pay&sign=L9BlkHXoLufcFdTteHRnZeosi4Dun8uMJHKZfIc6NERb0bfy%2B0kY3ZwRpQpt%2F2Pe6kXpliAEkazhsLSehRxtd9wp65lf%2FqUI3gD0Wijji%2F%2BLT9L2KesNKq2kDeD4KVp%2BHJWV9i2UNK%2BGoKtoA%2BNpUEdy9Yw04%2FAITqHv5gE6Q6IWiXnJl%2FucT9qk%2FhFI0BTpw%2BHIBZr%2FLcnFpCANIl9EruandnSBZFWzPO0elTgBeXudmPkeA7TmSTKJVxfivGdRObk7Zi8GqoqquaCx2ccvar7s3Xv36IXf3gozcZ7kCInFYlgU96HzZQmsoFHhHzMOvNLy9xRm8lrZGv5LDjuELQ%3D%3D&return_url=http%3A%2F%2Flocalhost%3A8080%2Falipay%2FtoSuccess&notify_url=http%3A%2F%2Fwqa29t.natappfree.cc%2Falipay%2Fnotify&version=1.0&app_id=2021000147660591&sign_type=RSA2&timestamp=2025-04-05+16%3A09%3A49&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=JSON">
+            <input type="hidden" name="biz_content" value="{&quot;out_trade_no&quot;:&quot;2025040516094934715DB8F1AC4A8587ABD2F9C8F6016A&quot;,&quot;total_amount&quot;:&quot;20.0&quot;,&quot;subject&quot;:&quot;男士-肝病检查&quot;,&quot;body&quot;:&quot;&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}">
+            <input type="submit" value="立即支付" style="display:none" >
+            </form>
+        `;
+
+    // 将字符串转换为HTML元素
+    var parser = new DOMParser();
+    var formData = parser.parseFromString(formDataStr, "text/html").body.firstChild;
+
+    // 将表单元素添加到当前页面
+    document.body.appendChild(formData);
+
+    // 提交表单
+    document.forms[0].submit();
+</script>
+</body>
+</html>

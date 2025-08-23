@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CheckitemMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.pojo.Checkitem">
+    <id column="ciId" jdbcType="INTEGER" property="ciid" />
+    <result column="ciName" jdbcType="VARCHAR" property="ciname" />
+    <result column="ciContent" jdbcType="VARCHAR" property="cicontent" />
+    <result column="meaning" jdbcType="VARCHAR" property="meaning" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ciId, ciName, ciContent, meaning, remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from checkitem
+    where ciId = #{ciid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCheckItem" parameterType="int" resultType="com.example.demo.pojo.Cireport">
+    select ck.ciId,ck.ciName from setmealdetailed sd,checkitem ck
+    where sd.ciId = ck.ciId and sd.smId=#{smId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from checkitem
+    where ciId = #{ciid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.pojo.Checkitem">
+    insert into checkitem (ciId, ciName, ciContent, 
+      meaning, remarks)
+    values (#{ciid,jdbcType=INTEGER}, #{ciname,jdbcType=VARCHAR}, #{cicontent,jdbcType=VARCHAR}, 
+      #{meaning,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.pojo.Checkitem">
+    insert into checkitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ciid != null">
+        ciId,
+      </if>
+      <if test="ciname != null">
+        ciName,
+      </if>
+      <if test="cicontent != null">
+        ciContent,
+      </if>
+      <if test="meaning != null">
+        meaning,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ciid != null">
+        #{ciid,jdbcType=INTEGER},
+      </if>
+      <if test="ciname != null">
+        #{ciname,jdbcType=VARCHAR},
+      </if>
+      <if test="cicontent != null">
+        #{cicontent,jdbcType=VARCHAR},
+      </if>
+      <if test="meaning != null">
+        #{meaning,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.pojo.Checkitem">
+    update checkitem
+    <set>
+      <if test="ciname != null">
+        ciName = #{ciname,jdbcType=VARCHAR},
+      </if>
+      <if test="cicontent != null">
+        ciContent = #{cicontent,jdbcType=VARCHAR},
+      </if>
+      <if test="meaning != null">
+        meaning = #{meaning,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ciId = #{ciid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.pojo.Checkitem">
+    update checkitem
+    set ciName = #{ciname,jdbcType=VARCHAR},
+      ciContent = #{cicontent,jdbcType=VARCHAR},
+      meaning = #{meaning,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where ciId = #{ciid,jdbcType=INTEGER}
+  </update>
+</mapper>
