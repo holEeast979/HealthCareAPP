@@ -1,0 +1,283 @@
+<template>
+
+    <body>
+        <!-- 总容器 -->
+        <div class="wrapper">
+            <header>
+                <i class="fa fa-angle-left" onclick="history.go(-1)"></i>
+                <p>请您选择体检机构</p>
+                <div></div>
+            </header>
+            <div class="top-ban"></div>
+
+            <ul class="hospital">
+                <li v-for="(hos,index) in hospitals">
+                    <h3 @click="tosetmeal(hos.hpid)">
+                        {{ hos.name }}
+                        <i class="fa fa-angle-right"></i>
+                    </h3>
+                    <div class="hospita-info">
+                        <img src="../assets/image/1.jpg">
+                        <table>
+                            <tr>
+                                <td>营业时间</td>
+                                <td>{{ hos.businesshours }}</td>
+                            </tr>
+                            <tr>
+                                <td>采血截止</td>
+                                <td>{{ hos.deadline }}</td>
+                            </tr>
+                            <tr>
+                                <td>电话</td>
+                                <td>{{ hos.telephone }}</td>
+                            </tr>
+                            <tr>
+                                <td>地址</td>
+                                <td>{{ hos.address }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="about">
+                        <p>
+                            <i class="fa fa-phone"></i>
+                            联系我们
+                        </p>
+                        <p>
+                            <i class="fa fa-map-marker"></i>
+                            查找位置
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bottom-ban"></div>
+            <global-footer></global-footer>
+        </div>
+    </body>
+</template>
+<script>
+import { reactive, toRefs } from 'vue';
+import axios from '../router/axios';
+// import router from '@/router';
+import { useRouter } from "vue-router";
+export default {
+    setup() {
+        hospital();
+        const router = useRouter();
+        const state = reactive({
+            image :'../assets/image/1.jpg',
+            hospitals: []
+        });
+        function tosetmeal(hpid) {
+            // router.push("/setmeal")
+            console.log("hos:"+hpid);
+            router.push({
+                path: '/setmeal',
+                query: {
+                    hpid: hpid 
+                }
+            })
+        }
+        function hospital() {
+            axios.get('api/hospital/showhospital')
+                .then(function (response) {
+                    // 成功处理
+                    console.log(response.data);
+                    state.hospitals = response.data.data;
+                })
+                .catch(function (error) {
+                    // 错误处理
+                    console.log(error);
+                })
+                .finally(function () {
+                    // 总是执行
+                });
+        }
+        function toindex() {
+            router.push("/index")
+        }
+        function topersonal(){
+            router.push("/personal")
+        }
+        return {
+            ...toRefs(state),
+            tosetmeal,
+            toindex,
+            topersonal
+        };
+    }
+}
+</script>
+
+<style scoper>
+/*********************** 总容器 ***********************/
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #F9F9F9;
+}
+
+/*********************** header ***********************/
+header {
+    width: 100%;
+    height: 15.7vw;
+    background-color: #FFF;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+    padding: 0 3.6vw;
+}
+
+header .fa {
+    font-size: 8vw;
+}
+
+/*********************** footer ***********************/
+footer {
+    width: 100%;
+    height: 14.2vw;
+    box-sizing: border-box;
+    border-top: solid 1px #E9E9E9;
+    background-color: #FFF;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+footer ul {
+    width: 100%;
+    height: 14.2vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+footer ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 3vw;
+    color: #999;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+footer ul li .fa {
+    font-size: 5vw;
+}
+
+/*********************** common样式 ***********************/
+.top-ban {
+    width: 100%;
+    height: 15.7vw;
+}
+
+.bottom-ban {
+    width: 100%;
+    height: 14.2vw;
+}
+
+/*********************** hospital ***********************/
+.hospital {
+    width: 100%;
+    margin-top: 3.6vw;
+}
+
+.hospital li {
+    width: 92.8vw;
+    margin: 0 auto;
+    border: solid 1px #EEE;
+    border-radius: 1vw;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .08);
+    background-color: #FFF;
+    margin-bottom: 3.6vw;
+
+    box-sizing: border-box;
+    padding: 4vw;
+}
+
+.hospital li h3 {
+    box-sizing: border-box;
+    padding-left: 2.4vw;
+    border-left: solid 3px #157999;
+    font-size: 4.3vw;
+    display: flex;
+    justify-content: space-between;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+.hospital li h3 i {
+    font-size: 5vw;
+}
+
+.hospital li .hospita-info {
+    width: 100%;
+    margin-top: 3vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hospital li .hospita-info img {
+    width: 22vw;
+    height: 22vw;
+}
+
+.hospital li .hospita-info table {
+    width: 59vw;
+    font-size: 3.5vw;
+    color: #666;
+}
+
+.hospital li .hospita-info table tr {
+    height: 6vw;
+}
+
+.hospital li .hospita-info table tr td {
+    vertical-align: top;
+}
+
+.hospital li .hospita-info table tr td:first-child {
+    width: 15vw;
+}
+
+.hospital li .about {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2vw;
+}
+
+.hospital li .about p {
+    width: 30vw;
+    height: 8vw;
+    border: solid 1px #157999;
+    border-radius: 2vw;
+
+    text-align: center;
+    line-height: 8vw;
+    margin-left: 2vw;
+
+    font-size: 4vw;
+    color: #157999;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+.hospital li .about p i {
+    color: #555;
+    margin-right: 1vw;
+}
+</style>
